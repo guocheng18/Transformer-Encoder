@@ -54,7 +54,7 @@ class TFEncoder(nn.Module):
     def reset_parameters(self):
         for p in self.parameters():
             if p.dim() > 1:
-                nn.init.xavier_uniform(p)
+                nn.init.xavier_uniform_(p)
 
     def forward(
         self, x: torch.FloatTensor, mask: torch.ByteTensor

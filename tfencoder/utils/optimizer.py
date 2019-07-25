@@ -7,13 +7,13 @@ class TFOptimizer:
     """Optim wrapper that implements rate."""
 
     def __init__(
-        self, model_size: int, factor: float, warmup: int, optimizer: optim.Optimizer
+        self, d_model: int, factor: float, warmup: int, optimizer: optim.Optimizer
     ) -> None:
         self.optimizer = optimizer
         self._step = 0
         self.warmup = warmup
         self.factor = factor
-        self.model_size = model_size
+        self.d_model = d_model
         self._rate = 0
 
     def step(self):
@@ -25,11 +25,13 @@ class TFOptimizer:
         self._rate = rate
         self.optimizer.step()
 
+    def zero_grad(self):
+        self.optimizer.zero_grad()
+
     def rate(self, step: Optional[int] = None) -> float:
         """Implement `lrate` above"""
         if step is None:
             step = self._step
         return self.factor * (
-            self.model_size ** (-0.5)
-            * min(step ** (-0.5), step * self.warmup ** (-1.5))
+            self.d_model ** (-0.5) * min(step ** (-0.5), step * self.warmup ** (-1.5))
         )

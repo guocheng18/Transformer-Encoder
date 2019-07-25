@@ -2,7 +2,7 @@ import copy
 
 import torch.nn as nn
 
-from .embedding import Embeddings as TFEmbeddings
+from .embedding import Embedding as TFEmbedding
 from .optimizer import TFOptimizer
 from .positional_encoding import PositionalEncoding as TFPositionalEncoding
 
