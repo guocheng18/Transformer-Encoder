@@ -1,26 +1,14 @@
 # Transformer Encoder
 
-This project aims at providing an easy-to-use interface of transformer encoder. The implementation borrows mostly from [OpenNMT-py](https://github.com/OpenNMT/OpenNMT-py).
+<img src="https://img.shields.io/badge/python-3.6 | 3.7-blue" />
+<img src="https://img.shields.io/pypi/v/tfencoder?color=orange" />
+<img src="https://img.shields.io/badge/license-MIT-green" />
 
-# Requirements
+This package provides an easy-to-use interface of transformer encoder.
 
-- Python 3.6
-- PyTorch 1.0.0
+# Go through
 
-# Installation
-
-Install from pypi:
-```console
-pip install tfencoder
-```
-Or from Github for the latest version:
-```console
-pip install git+https://github.com/guocheng2018/transformer-encoder.git
-```
-
-# Documentation
-
-The main class: *`tfeccoder.TFEncoder(n_layers, d_model, d_ff, n_heads, dropout)`*
+The main class: `tfeccoder.TFEncoder(n_layers, d_model, d_ff, n_heads, dropout)`
 
 - `n_layers`: number of stacked layers of encoder
 - `d_model`: dimension of each word vector
@@ -28,7 +16,7 @@ The main class: *`tfeccoder.TFEncoder(n_layers, d_model, d_ff, n_heads, dropout)
 - `n_heads`: number of heads in self-attention
 - `dropout`: dropout rate, default 0.1
 
-*`tfeccoder.TFEncoder.forward(x, mask)`*
+`forward(x, mask)`
 
 - `x(~torch.FloatTensor)`: shape *(batch_size, max_seq_len, d_model)*
 - `mask(~torch.ByteTensor)`: shape *(batch_size, max_seq_len)*
@@ -48,22 +36,22 @@ out = encoder(x, mask)
 
 This package also provides the embedding, positional encoding and scheduled optimizer that are used in transformer as extra functionalities.
 
-class *`tfencoder.utils.TFEmbedding(d_model, n_vocab)`*
+class `tfencoder.utils.TFEmbedding(d_model, n_vocab)`
 
 - `d_model`: same as TFEncoder
 - `n_vocab`: vocabulary size
 
-*`tfencoder.utils.TFEmbedding.forward(x)`*
+`forward(x)`
 
 - `x(~torch.LongTensor)`: shape *(batch_size, max_seq_len)*
 
-class *`tfencoder.utils.TFPositionalEncoding(d_model, dropout, max_len)`*
+class `tfencoder.utils.TFPositionalEncoding(d_model, dropout, max_len)`
 
 - `d_model`: same as TFEncoder
 - `dropout`: dropout rate
 - `max_len`: max sequence length
 
-*`tfencoder.utils.TFPositionalEncoding.forward(x)`*
+`forward(x)`
 
 - `x(~torch.FloatTensor)`: shape *(batch_size, max_seq_len, d_model)*
 
@@ -82,7 +70,7 @@ x = torch.LongTensor([[1,2,3,4,5], [1,2,3,0,0]])
 out = tfinput(x)
 ```
 
-class *`tfencoder.utils.TFOptimizer(d_model, factor, warmup, optimizer)`*
+class `tfencoder.utils.TFOptimizer(d_model, factor, warmup, optimizer)`
 
 - `d_model`: equals d_model in TFEncoder
 - `factor`: scale factor of learning rate
@@ -93,7 +81,7 @@ Example:
 ```python
 import torch.optim as optim
 
-from tfencoder.encoder import TFEncoder
+from tfencoder import TFEncoder
 from tfencoder.utils import TFOptimizer
 
 encoder = TFEncoder(6, 512, 2048, 8, dropout=0.1)
@@ -107,23 +95,15 @@ loss.backward()
 optimizer.step()
 ```
 
-# License
+# Installation
 
-MIT
+Requirements: `python(>=3.6)`, `pytorch(>=1.0.0)`
 
-# Citation
-
+Install from pypi:
+```console
+pip install tfencoder
 ```
-@inproceedings{opennmt,
-  author    = {Guillaume Klein and
-               Yoon Kim and
-               Yuntian Deng and
-               Jean Senellart and
-               Alexander M. Rush},
-  title     = {Open{NMT}: Open-Source Toolkit for Neural Machine Translation},
-  booktitle = {Proc. ACL},
-  year      = {2017},
-  url       = {https://doi.org/10.18653/v1/P17-4012},
-  doi       = {10.18653/v1/P17-4012}
-}
+Or from Github for the latest version:
+```console
+pip install git+https://github.com/guocheng2018/transformer-encoder.git
 ```
