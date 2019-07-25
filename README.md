@@ -7,9 +7,22 @@
 </p>
 This package provides an easy-to-use interface of transformer encoder.
 
+# Installation
+
+Requirements: `python(>=3.5)`, `pytorch(>=1.0.0)`
+
+Install from pypi:
+```
+pip install tfencoder
+```
+Or from Github for the latest version:
+```
+pip install git+https://github.com/guocheng2018/transformer-encoder.git
+```
+
 # Go through
 
-The main class: `tfeccoder.TFEncoder(n_layers, d_model, d_ff, n_heads, dropout)`
+**tfeccoder.TFEncoder(n_layers, d_model, d_ff, n_heads, dropout)**
 
 - `n_layers`: number of stacked layers of encoder
 - `d_model`: dimension of each word vector
@@ -37,7 +50,7 @@ out = encoder(x, mask)
 
 This package also provides the embedding, positional encoding and scheduled optimizer that are used in transformer as extra functionalities.
 
-class `tfencoder.utils.TFEmbedding(d_model, n_vocab)`
+**tfencoder.utils.TFEmbedding(d_model, n_vocab)**
 
 - `d_model`: same as TFEncoder
 - `n_vocab`: vocabulary size
@@ -46,7 +59,7 @@ class `tfencoder.utils.TFEmbedding(d_model, n_vocab)`
 
 - `x(~torch.LongTensor)`: shape *(batch_size, max_seq_len)*
 
-class `tfencoder.utils.TFPositionalEncoding(d_model, dropout, max_len)`
+**tfencoder.utils.TFPositionalEncoding(d_model, dropout, max_len)**
 
 - `d_model`: same as TFEncoder
 - `dropout`: dropout rate
@@ -71,7 +84,7 @@ x = torch.LongTensor([[1,2,3,4,5], [1,2,3,0,0]])
 out = tfinput(x)
 ```
 
-class `tfencoder.utils.TFOptimizer(d_model, factor, warmup, optimizer)`
+**tfencoder.utils.TFOptimizer(d_model, factor, warmup, optimizer)**
 
 - `d_model`: equals d_model in TFEncoder
 - `factor`: scale factor of learning rate
@@ -94,17 +107,4 @@ loss = ...
 loss.backward()
 
 optimizer.step()
-```
-
-# Installation
-
-Requirements: `python(>=3.6)`, `pytorch(>=1.0.0)`
-
-Install from pypi:
-```console
-pip install tfencoder
-```
-Or from Github for the latest version:
-```console
-pip install git+https://github.com/guocheng2018/transformer-encoder.git
 ```
