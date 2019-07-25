@@ -1,9 +1,10 @@
 # Transformer Encoder
-
-<img src="https://img.shields.io/badge/python-3.6 | 3.7-blue" />
-<img src="https://img.shields.io/pypi/v/tfencoder?color=orange" />
-<img src="https://img.shields.io/badge/license-MIT-green" />
-
+<p>
+    <img src="https://img.shields.io/badge/python-3.5 | 3.6 | 3.7-blue" />
+    <img src="https://img.shields.io/pypi/v/tfencoder?color=orange" />
+    <img src="https://img.shields.io/badge/license-MIT-green" />
+    <img src="https://img.shields.io/travis/com/guocheng2018/transformer-encoder" />
+</p>
 This package provides an easy-to-use interface of transformer encoder.
 
 # Go through
