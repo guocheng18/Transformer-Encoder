@@ -5,7 +5,11 @@
     <img src="https://img.shields.io/badge/license-MIT-green" />
     <img src="https://img.shields.io/travis/com/guocheng2018/transformer-encoder" />
 </p>
-This package provides an easy-to-use interface of transformer encoder.
+This package provides an easy-to-use interface of transformer encoder. You can use it as a general sequence feature extractor and incorporate it in 
+your newly designed model.<br><br>
+<p>
+    <img src="https://i.ibb.co/YhR6wWf/encoder.png" alt="encoder" border="0" />
+</p>
 
 ## Installation
 
