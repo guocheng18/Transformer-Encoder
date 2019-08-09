@@ -1,8 +1,9 @@
 import torch
 import torch.nn as nn
 
+
 class LayerNorm(nn.Module):
-    def __init__(self, features: int, eps: float=1e-6) -> None:
+    def __init__(self, features: int, eps: float = 1e-6) -> None:
         # features = d_model
         super(LayerNorm, self).__init__()
         self.a_2 = nn.Parameter(torch.ones(features))

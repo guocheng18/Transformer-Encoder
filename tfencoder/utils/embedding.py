@@ -4,9 +4,9 @@ import torch
 import torch.nn as nn
 
 
-class Embedding(nn.Module):
+class TFEmbedding(nn.Module):
     def __init__(self, d_model: int, n_vocab: int) -> None:
-        super(Embedding, self).__init__()
+        super(TFEmbedding, self).__init__()
         self.lut = nn.Embedding(n_vocab, d_model)
         self.d_model = d_model
         self.reset_parameters()

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tfencoder",
-    version="0.0.1",
+    version="0.0.2",
     author="Cheng Guo",
     author_email="guocheng672@gmail.com",
     description="A pytorch implementation of transformer encoder",

@@ -7,7 +7,7 @@
 </p>
 This package provides an easy-to-use interface of transformer encoder.
 
-# Installation
+## Installation
 
 Requirements: `python(>=3.5)`, `pytorch(>=1.0.0)`
 
@@ -20,9 +20,9 @@ Or from Github for the latest version:
 pip install git+https://github.com/guocheng2018/transformer-encoder.git
 ```
 
-# Go through
+## Usage
 
-**tfeccoder.TFEncoder(n_layers, d_model, d_ff, n_heads, dropout)**
+*TFEncoder(n_layers, d_model, d_ff, n_heads, dropout)*
 
 - `n_layers`: number of stacked layers of encoder
 - `d_model`: dimension of each word vector
@@ -30,10 +30,10 @@ pip install git+https://github.com/guocheng2018/transformer-encoder.git
 - `n_heads`: number of heads in self-attention
 - `dropout`: dropout rate, default 0.1
 
-`forward(x, mask)`
+*TFEncoder.forward(x, mask)*
 
-- `x(~torch.FloatTensor)`: shape *(batch_size, max_seq_len, d_model)*
-- `mask(~torch.ByteTensor)`: shape *(batch_size, max_seq_len)*
+- `x (~torch.FloatTensor)`: shape *(batch_size, max_seq_len, d_model)*
+- `mask (~torch.ByteTensor)`: shape *(batch_size, max_seq_len)*
 
 Example:
 ```python
@@ -48,28 +48,28 @@ mask = torch.randn(64, 100).ge(0)  # a random mask
 out = encoder(x, mask)
 ```
 
-This package also provides the embedding, positional encoding and scheduled optimizer that are used in transformer as extra functionalities.
+**This package also provides the embedding, positional encoding and scheduled optimizer that are used in transformer as extra functionalities.**
 
-**tfencoder.utils.TFEmbedding(d_model, n_vocab)**
+*TFEmbedding(d_model, n_vocab)*
 
 - `d_model`: same as TFEncoder
 - `n_vocab`: vocabulary size
 
-`forward(x)`
+*TFEmbedding.forward(x)*
 
-- `x(~torch.LongTensor)`: shape *(batch_size, max_seq_len)*
+- `x (~torch.LongTensor)`: shape *(batch_size, max_seq_len)*
 
-**tfencoder.utils.TFPositionalEncoding(d_model, dropout, max_len)**
+*TFPositionalEncoding(d_model, dropout, max_len)*
 
 - `d_model`: same as TFEncoder
 - `dropout`: dropout rate
 - `max_len`: max sequence length
 
-`forward(x)`
+*TFPositionalEncoding.forward(x)*
 
-- `x(~torch.FloatTensor)`: shape *(batch_size, max_seq_len, d_model)*
+- `x (~torch.FloatTensor)`: shape *(batch_size, max_seq_len, d_model)*
 
-You can combine this two, for example:
+Example:
 ```python
 import torch
 import torch.nn as nn
@@ -84,12 +84,12 @@ x = torch.LongTensor([[1,2,3,4,5], [1,2,3,0,0]])
 out = tfinput(x)
 ```
 
-**tfencoder.utils.TFOptimizer(d_model, factor, warmup, optimizer)**
+*TFOptimizer(d_model, factor, warmup, optimizer)*
 
 - `d_model`: equals d_model in TFEncoder
 - `factor`: scale factor of learning rate
 - `warmup`: warmup steps 
-- `optimizer(~torch.optim.Optimzier)`: e.g. Adam
+- `optimizer (~torch.optim.Optimzier)`: e.g. adam optimzier
 
 Example:
 ```python
@@ -109,5 +109,5 @@ loss.backward()
 optimizer.step()
 ```
 
-# Contribution
+## Contribution
 Any contributions are welcome!

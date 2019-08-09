@@ -10,7 +10,7 @@ from .utils import clones
 
 
 class EncoderLayer(nn.Module):
-    "Encoder is made up of self-attn and feed forward"
+    """Encoder is made up of self-attn and feed forward"""
 
     def __init__(
         self,
@@ -46,5 +46,5 @@ class SublayerConnection(nn.Module):
     def forward(
         self, x: torch.FloatTensor, sublayer: Union[MultiHeadedAttention, FeedForward]
     ) -> torch.FloatTensor:
-        "Apply residual connection to any sublayer with the same size."
+        """Apply residual connection to any sublayer with the same size."""
         return x + self.dropout(sublayer(self.norm(x)))

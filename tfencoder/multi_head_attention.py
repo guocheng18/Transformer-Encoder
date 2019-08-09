@@ -1,5 +1,5 @@
 import math
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Any
 
 import torch
 import torch.nn as nn
@@ -8,33 +8,38 @@ import torch.nn.functional as F
 from .utils import clones
 
 
-def ScaledDotProductAttention(
-    query: torch.FloatTensor,
-    key: torch.FloatTensor,
-    value: torch.FloatTensor,
-    mask: Optional[torch.ByteTensor] = None,
-    dropout: Optional[nn.Dropout] = None,
-) -> Tuple[torch.FloatTensor, torch.FloatTensor]:
-    """
-    Args: 
-        `query`: shape (batch_size, n_heads, max_len, d_q)
-        `key`: shape (batch_size, n_heads, max_len, d_k)
-        `value`: shape (batch_size, n_heads, max_len, d_v)
-        `mask`: shape (batch_size, 1, 1, max_len)
-        `dropout`: nn.Dropout
-    
-    Returns:
-        `weighted value`: shape (batch_size, n_heads, max_len, d_v)
-        `weight matrix`: shape (batch_size, n_heads, max_len, max_len)
-    """
-    d_k = query.size(-1)  # d_k = d_model / n_heads
-    scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_k)  # B*H*L*L
-    if mask is not None:
-        scores = scores.masked_fill(mask == 0, -1e9)
-    p_attn = F.softmax(scores, dim=-1)  # B*H*L*L
-    if dropout is not None:
-        p_attn = dropout(p_attn)
-    return torch.matmul(p_attn, value), p_attn
+class ScaledDotProductAttention(nn.Module):
+    def __init__(self):
+        super(ScaledDotProductAttention, self).__init__()
+
+    def forward(
+        self,
+        query: torch.FloatTensor,
+        key: torch.FloatTensor,
+        value: torch.FloatTensor,
+        mask: Optional[torch.ByteTensor] = None,
+        dropout: Optional[nn.Dropout] = None,
+    ) -> Tuple[torch.Tensor, Any]:
+        """
+        Args:
+            `query`: shape (batch_size, n_heads, max_len, d_q)
+            `key`: shape (batch_size, n_heads, max_len, d_k)
+            `value`: shape (batch_size, n_heads, max_len, d_v)
+            `mask`: shape (batch_size, 1, 1, max_len)
+            `dropout`: nn.Dropout
+
+        Returns:
+            `weighted value`: shape (batch_size, n_heads, max_len, d_v)
+            `weight matrix`: shape (batch_size, n_heads, max_len, max_len)
+        """
+        d_k = query.size(-1)  # d_k = d_model / n_heads
+        scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_k)  # B*H*L*L
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, -1e9)
+        p_attn = F.softmax(scores, dim=-1)  # B*H*L*L
+        if dropout is not None:
+            p_attn = dropout(p_attn)
+        return torch.matmul(p_attn, value), p_attn
 
 
 class MultiHeadedAttention(nn.Module):
@@ -45,6 +50,7 @@ class MultiHeadedAttention(nn.Module):
         self.d_k = d_model // n_heads
         self.h = n_heads
         self.linears = clones(nn.Linear(d_model, d_model), 4)
+        self.sdpa = ScaledDotProductAttention()
         self.attn = None
         self.dropout = nn.Dropout(p=dropout)
 
@@ -78,9 +84,7 @@ class MultiHeadedAttention(nn.Module):
 
         # 2) Apply attention on all the projected vectors in batch.
         # x: B x H x L x D_v
-        x, self.attn = ScaledDotProductAttention(
-            query, key, value, mask=mask, dropout=self.dropout
-        )
+        x, self.attn = self.sdpa(query, key, value, mask=mask, dropout=self.dropout)
 
         # 3) "Concat" using a view and apply a final linear.
         x = x.transpose(1, 2).contiguous().view(batch_size, -1, self.h * self.d_k)

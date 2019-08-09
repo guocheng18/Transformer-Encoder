@@ -2,12 +2,11 @@ import math
 
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
 
 
-class PositionalEncoding(nn.Module):
+class TFPositionalEncoding(nn.Module):
     def __init__(self, d_model: int, dropout: float, max_len: int = 5000) -> None:
-        super(PositionalEncoding, self).__init__()
+        super(TFPositionalEncoding, self).__init__()
         self.dropout = nn.Dropout(p=dropout)
 
         # Compute the positional encodings once in log space.
@@ -29,5 +28,5 @@ class PositionalEncoding(nn.Module):
         Returns:
             `encoder input`, shape (batch, max_len, d_model)
         """
-        x = x + Variable(self.pe[:, : x.size(1)], requires_grad=False)
+        x = x + self.pe[:, : x.size(1)]
         return self.dropout(x)
