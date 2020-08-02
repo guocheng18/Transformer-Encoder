@@ -1,6 +1,6 @@
 import torch
 
-from tfencoder.encoder import TFEncoder
+from transformer_encoder.encoder import TransformerEncoder
 
 d_model = 512
 n_heads = 8
@@ -12,7 +12,7 @@ n_layers = 6
 
 
 def test_encoder():
-    enc = TFEncoder(n_layers, d_model, d_ff, n_heads, dropout)
+    enc = TransformerEncoder(n_layers, d_model, d_ff, n_heads, dropout)
     x = torch.randn(batch_size, max_len, d_model)
     mask = torch.randn(batch_size, max_len).ge(0)
     out = enc(x, mask)

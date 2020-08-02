@@ -12,14 +12,9 @@ class ScaledDotProductAttention(nn.Module):
     def __init__(self):
         super(ScaledDotProductAttention, self).__init__()
 
-    def forward(
-        self,
-        query: torch.FloatTensor,
-        key: torch.FloatTensor,
-        value: torch.FloatTensor,
-        mask: Optional[torch.ByteTensor] = None,
-        dropout: Optional[nn.Dropout] = None,
-    ) -> Tuple[torch.Tensor, Any]:
+    def forward(self, query: torch.FloatTensor, key: torch.FloatTensor, value: torch.FloatTensor,
+                mask: Optional[torch.ByteTensor] = None, dropout: Optional[nn.Dropout] = None) -> Tuple[
+        torch.Tensor, Any]:
         """
         Args:
             `query`: shape (batch_size, n_heads, max_len, d_q)
@@ -35,16 +30,16 @@ class ScaledDotProductAttention(nn.Module):
         d_k = query.size(-1)  # d_k = d_model / n_heads
         scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_k)  # B*H*L*L
         if mask is not None:
-            scores = scores.masked_fill(mask == 0, -1e9)
+            scores = scores.masked_fill(mask.eq(0), -1e9)
         p_attn = F.softmax(scores, dim=-1)  # B*H*L*L
         if dropout is not None:
             p_attn = dropout(p_attn)
         return torch.matmul(p_attn, value), p_attn
 
 
-class MultiHeadedAttention(nn.Module):
-    def __init__(self, n_heads: int, d_model: int, dropout: float = 0.1) -> None:
-        super(MultiHeadedAttention, self).__init__()
+class MultiHeadAttention(nn.Module):
+    def __init__(self, n_heads: int, d_model: int, dropout: float = 0.1):
+        super(MultiHeadAttention, self).__init__()
         assert d_model % n_heads == 0
         # We assume d_v always equals d_k
         self.d_k = d_model // n_heads
@@ -54,13 +49,8 @@ class MultiHeadedAttention(nn.Module):
         self.attn = None
         self.dropout = nn.Dropout(p=dropout)
 
-    def forward(
-        self,
-        query: torch.FloatTensor,
-        key: torch.FloatTensor,
-        value: torch.FloatTensor,
-        mask: Optional[torch.ByteTensor] = None,
-    ) -> torch.FloatTensor:
+    def forward(self, query: torch.FloatTensor, key: torch.FloatTensor, value: torch.FloatTensor,
+                mask: Optional[torch.ByteTensor] = None) -> torch.FloatTensor:
         """
         Args: 
             `query`: shape (batch_size, max_len, d_model)
@@ -77,10 +67,8 @@ class MultiHeadedAttention(nn.Module):
         batch_size = query.size(0)
 
         # 1) Do all the linear projections in batch from d_model => h x d_k
-        query, key, value = [
-            l(x).view(batch_size, -1, self.h, self.d_k).transpose(1, 2)
-            for l, x in zip(self.linears, (query, key, value))
-        ]
+        query, key, value = [l(x).view(batch_size, -1, self.h, self.d_k).transpose(1, 2) for l, x in
+                             zip(self.linears, (query, key, value))]
 
         # 2) Apply attention on all the projected vectors in batch.
         # x: B x H x L x D_v

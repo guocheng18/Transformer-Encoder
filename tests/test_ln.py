@@ -1,6 +1,6 @@
 import torch
 
-from tfencoder.layer_norm import LayerNorm
+from transformer_encoder.layer_norm import LayerNorm
 
 d_model = 512
 eps = 1e-6

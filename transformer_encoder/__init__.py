@@ -3,6 +3,6 @@
 
     For more information: https://github.com/guocheng2018/transformer-encoder
 """
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
-from .encoder import TFEncoder
+from .encoder import TransformerEncoder
