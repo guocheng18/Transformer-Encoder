@@ -1,8 +1,5 @@
 # Transformer Encoder
-<p>
-    <img src="https://badge.fury.io/py/transformer-encoder.svg" />
-    <img src="https://img.shields.io/travis/com/guocheng2018/transformer-encoder" />
-</p>
+<p><img src="https://img.shields.io/travis/com/guocheng2018/transformer-encoder" /></p>
 This repo provides an easy-to-use interface of transformer encoder. You can use it as a general sequence feature extractor and incorporate it in 
 your model.<br><br>
 <p>
@@ -11,29 +8,29 @@ your model.<br><br>
 
 ## Examples
 
-Quickstart
+Encoder module
 ```python
-import torch
 from transformer_encoder import TransformerEncoder
-from transformer_encoder.utils import PositionalEncoding
 
-# Model
 encoder = TransformerEncoder(d_model=512, d_ff=2048, n_heads=8, n_layers=6, dropout=0.1)
 
-# Input embeds
-input_embeds = torch.nn.Embedding(num_embeddings=6, embedding_dim=512)
-pe_embeds = PositionalEncoding(d_model=512, dropout=0.1, max_len=5)
-encoder_input = torch.nn.Sequential(input_embeds, pe_embeds)
-
-# Input data (zero-padding)
-batch_seqs = torch.tensor([[1,2,3,4,5], [1,2,3,0,0]], dtype=torch.long)
-mask = batch_seqs.ne(0)
-
-# Run model
-out = encoder(encoder_input(batch_seqs), mask)
+input_seqs = ...
+mask = ...
+out = encoder(input_seqs, mask)
 ```
 
-Using the built-in warming up optimizer 
+Positional encoding
+```python
+import torch.nn as nn
+from transformer_encoder.utils import PositionalEncoding
+
+input_layer = nn.Sequential(
+    nn.Embedding(num_embeddings=10000, embedding_dim=512),
+    PositionalEncoding(d_model=512, dropout=0.1, max_len=5000)
+)
+```
+
+Warming up optimizer 
 ```python
 import torch.optim as optim
 from transformer_encoder.utils import WarmupOptimizer
