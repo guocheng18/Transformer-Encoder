@@ -1,6 +1,7 @@
 # Transformer Encoder
 <p>
     <img src="https://img.shields.io/travis/com/guocheng2018/transformer-encoder" />
+    <img src="https://badge.fury.io/py/transformer-encoder.svg" />
 </p>
 This repo provides an easy-to-use interface of transformer encoder. You can use it as a general sequence feature extractor and incorporate it in 
 your model.<br><br>
