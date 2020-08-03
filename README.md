@@ -1,11 +1,8 @@
 # Transformer Encoder
 <p>
-    <img src="https://img.shields.io/badge/python-3.5 | 3.6 | 3.7-blue" />
-    <img src="https://img.shields.io/pypi/v/tfencoder?color=orange" />
-    <img src="https://img.shields.io/badge/license-MIT-green" />
     <img src="https://img.shields.io/travis/com/guocheng2018/transformer-encoder" />
 </p>
-This package provides an easy-to-use interface of transformer encoder. You can use it as a general sequence feature extractor and incorporate it in 
+This repo provides an easy-to-use interface of transformer encoder. You can use it as a general sequence feature extractor and incorporate it in 
 your model.<br><br>
 <p>
     <img src="https://i.ibb.co/YhR6wWf/encoder.png" alt="encoder" border="0" />
@@ -27,23 +24,22 @@ input_embeds = torch.nn.Embedding(num_embeddings=6, embedding_dim=512)
 pe_embeds = PositionalEncoding(d_model=512, dropout=0.1, max_len=5)
 encoder_input = torch.nn.Sequential(input_embeds, pe_embeds)
 
-# Input data
+# Input data (zero-padding)
 batch_seqs = torch.tensor([[1,2,3,4,5], [1,2,3,0,0]], dtype=torch.long)
 mask = batch_seqs.ne(0)
 
-# Run forward
+# Run model
 out = encoder(encoder_input(batch_seqs), mask)
 ```
 
-Using the built-in optimizer with warming up strategy 
+Using the built-in warming up optimizer 
 ```python
 import torch.optim as optim
-import transformer_encoder
 from transformer_encoder.utils import WarmupOptimizer
 
-encoder = transformer_encoder.TransformerEncoder(d_model=512, d_ff=2048, n_heads=8, n_layers=6, dropout=0.1)
+model = ...
 
-base_optimizer = optim.Adam(encoder.parameters(), lr=1e-3)
+base_optimizer = optim.Adam(model.parameters(), lr=1e-3)
 optimizer = WarmupOptimizer(base_optimizer, d_model=512, scale_factor=1, warmup_steps=100)
 
 optimizer.zero_grad()
@@ -52,7 +48,8 @@ loss.backward()
 optimizer.step()
 ```
 
-## Install from PyPi
+## Install from PyPI
+Requires `python 3.5+`, `pytorch 1.0.0+`
 ```
 pip install transformer_encoder
 ```
@@ -85,9 +82,9 @@ pip install transformer_encoder
 **transformer_encoder.utils.WarmupOptimizer(base_optimizer, d_model, scale_factor, warmup_steps)**
 
 - `base_optimizer (~torch.optim.Optimzier)`: e.g. adam optimzier
-- `d_model`: equals d_model in TFEncoder
+- `d_model`: equals d_model in TransformerEncoder
 - `scale_factor`: scale factor of learning rate
-- `warmup_steps`: warmup steps 
+- `warmup_steps`: warming up steps 
 
 
 ## Contribution
