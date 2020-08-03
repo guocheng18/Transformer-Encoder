@@ -14,7 +14,6 @@ setuptools.setup(
     url="https://github.com/guocheng2018/transformer-encoder",
     packages=setuptools.find_packages(),
     python_requires=">=3.5",
-    install_requires=["pytorch>=1.0.0"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

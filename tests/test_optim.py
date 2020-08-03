@@ -9,12 +9,12 @@ d_ff = 2048
 dropout = 0.1
 n_layers = 6
 
-factor = 1
-warmup = 20
+scale_factor = 1
+warmup_steps = 20
 
 
 def test_optim():
-    enc = TransformerEncoder(n_layers, d_model, d_ff, n_heads, dropout)
-    opt = WarmupOptimizer(d_model, factor, warmup, optim.Adam(enc.parameters()))
+    enc = TransformerEncoder(d_model, d_ff, n_heads=n_heads, n_layers=n_layers, dropout=dropout)
+    opt = WarmupOptimizer(optim.Adam(enc.parameters()), d_model, scale_factor, warmup_steps)
     assert type(opt.rate(step=1)) is float  # step starts from 1
     opt.step()

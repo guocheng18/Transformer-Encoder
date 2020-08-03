@@ -12,7 +12,7 @@ n_layers = 6
 
 
 def test_encoder():
-    enc = TransformerEncoder(n_layers, d_model, d_ff, n_heads, dropout)
+    enc = TransformerEncoder(d_model, d_ff, n_heads=n_heads, n_layers=n_layers, dropout=dropout)
     x = torch.randn(batch_size, max_len, d_model)
     mask = torch.randn(batch_size, max_len).ge(0)
     out = enc(x, mask)
