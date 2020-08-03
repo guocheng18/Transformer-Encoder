@@ -13,11 +13,11 @@ your model.<br><br>
 Quickstart
 ```python
 import torch
-import transformer_encoder
+from transformer_encoder import TransformerEncoder
 from transformer_encoder.utils import PositionalEncoding
 
 # Model
-encoder = transformer_encoder.TransformerEncoder(d_model=512, d_ff=2048, n_heads=8, n_layers=6, dropout=0.1)
+encoder = TransformerEncoder(d_model=512, d_ff=2048, n_heads=8, n_layers=6, dropout=0.1)
 
 # Input embeds
 input_embeds = torch.nn.Embedding(num_embeddings=6, embedding_dim=512)
