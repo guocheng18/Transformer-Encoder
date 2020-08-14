@@ -1,7 +1,6 @@
 # Transformer Encoder
 <p><img src="https://img.shields.io/travis/com/guocheng2018/transformer-encoder" /></p>
-This repo provides an easy-to-use interface of transformer encoder. You can use it as a general sequence feature extractor and incorporate it in 
-your model.<br><br>
+This repository provides an easy-to-use interface of transformer encoder.
 <p>
     <img src="https://i.ibb.co/YhR6wWf/encoder.png" alt="encoder" border="0" />
 </p>
@@ -54,7 +53,7 @@ pip install transformer_encoder
 
 ## API
 
-**transformer_encoder.TransformerEncoder(d_model, d_ff, n_heads=1, n_layers=1, dropout=0.1)**
+*transformer_encoder.TransformerEncoder(d_model, d_ff, n_heads=1, n_layers=1, dropout=0.1)*
 
 - `d_model`: dimension of each word vector
 - `d_ff`: hidden dimension of feed forward layer
@@ -62,22 +61,22 @@ pip install transformer_encoder
 - `n_layers`: number of stacked layers of encoder (defaults to 1)
 - `dropout`: dropout rate (defaults to 0.1)
 
-**transformer_encoder.TransformerEncoder.forward(x, mask)**
+*transformer_encoder.TransformerEncoder.forward(x, mask)*
 
 - `x (~torch.FloatTensor)`: shape *(batch_size, max_seq_len, d_model)*
 - `mask (~torch.ByteTensor)`: shape *(batch_size, max_seq_len)*
 
-**transformer_encoder.utils.PositionalEncoding(d_model, dropout=0.1, max_len=5000)**
+*transformer_encoder.utils.PositionalEncoding(d_model, dropout=0.1, max_len=5000)*
 
 - `d_model`: same as TransformerEncoder
 - `dropout`: dropout rate (defaults to 0.1)
 - `max_len`: max sequence length (defaults to 5000)
 
-**transformer_encoder.utils.PositionalEncoding.forward(x)**
+*transformer_encoder.utils.PositionalEncoding.forward(x)*
 
 - `x (~torch.FloatTensor)`: shape *(batch_size, max_seq_len, d_model)*
 
-**transformer_encoder.utils.WarmupOptimizer(base_optimizer, d_model, scale_factor, warmup_steps)**
+*transformer_encoder.utils.WarmupOptimizer(base_optimizer, d_model, scale_factor, warmup_steps)*
 
 - `base_optimizer (~torch.optim.Optimzier)`: e.g. adam optimzier
 - `d_model`: equals d_model in TransformerEncoder
