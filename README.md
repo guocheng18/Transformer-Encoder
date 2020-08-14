@@ -1,13 +1,18 @@
 # Transformer Encoder
-<p><img src="https://img.shields.io/travis/com/guocheng2018/transformer-encoder" /></p>
-This repository provides an easy-to-use interface of transformer encoder.
+<p>
+    <img src="https://img.shields.io/travis/com/guocheng2018/transformer-encoder" />
+    <img src="https://img.shields.io/badge/contributions-welcome-brightgreen" />
+</p>
+<p>
+    This repository provides a pytorch implementation of the encoder of [Transformer](http://papers.nips.cc/paper/7181-attention-is-all-you-need).
+</p>
 <p>
     <img src="https://i.ibb.co/YhR6wWf/encoder.png" alt="encoder" border="0" />
 </p>
 
-## Examples
+## Getting started
 
-Encoder module
+Build a transformer encoder
 ```python
 from transformer_encoder import TransformerEncoder
 
@@ -18,7 +23,7 @@ mask = ...
 out = encoder(input_seqs, mask)
 ```
 
-Positional encoding
+Add positional encoding to input embeddings
 ```python
 import torch.nn as nn
 from transformer_encoder.utils import PositionalEncoding
@@ -29,7 +34,7 @@ input_layer = nn.Sequential(
 )
 ```
 
-Warming up optimizer 
+Optimize model with the warming up strategy 
 ```python
 import torch.optim as optim
 from transformer_encoder.utils import WarmupOptimizer
@@ -45,13 +50,7 @@ loss.backward()
 optimizer.step()
 ```
 
-## Install from PyPI
-Requires `python 3.5+`, `pytorch 1.0.0+`
-```
-pip install transformer_encoder
-```
-
-## API
+## API Reference
 
 *transformer_encoder.TransformerEncoder(d_model, d_ff, n_heads=1, n_layers=1, dropout=0.1)*
 
@@ -84,5 +83,8 @@ pip install transformer_encoder
 - `warmup_steps`: warming up steps 
 
 
-## Contribution
-Any contributions are welcome!
+## Install from PyPI
+Requires `python 3.5+`, `pytorch 1.0.0+`
+```
+pip install transformer_encoder
+```
