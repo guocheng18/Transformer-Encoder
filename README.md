@@ -3,9 +3,9 @@
     <img src="https://img.shields.io/travis/com/guocheng2018/transformer-encoder" />
     <img src="https://img.shields.io/badge/contributions-welcome-brightgreen" />
 </p>
-<p>
-    This repository provides a pytorch implementation of the encoder of [Transformer](http://papers.nips.cc/paper/7181-attention-is-all-you-need).
-</p>
+
+This repository provides a pytorch implementation of the encoder of [Transformer](http://papers.nips.cc/paper/7181-attention-is-all-you-need/).
+
 <p>
     <img src="https://i.ibb.co/YhR6wWf/encoder.png" alt="encoder" border="0" />
 </p>
@@ -83,7 +83,7 @@ optimizer.step()
 - `warmup_steps`: warming up steps 
 
 
-## Install from PyPI
+## Installation
 Requires `python 3.5+`, `pytorch 1.0.0+`
 ```
 pip install transformer_encoder
